@@ -1,18 +1,41 @@
 const messageService = require('../service/message');
-const SUCCESS_MESSAGE = require('../constants/success-messages');
+const ERROR_MESSAGE = require('../constants/error-messages');
+const { Server } = require('socket.io');
 
-const addMessage = async (req, res) => {
+
+const socketIOConnection = async (server) => {
+    const io = new Server(server, {
+        cors: {
+            origin: ["http://127.0.0.1:5173", null],
+            methods: ["POST", "GET"],
+        }
+    });
+
+    io.on('connection', (socket) => {
+        socket.on('join-room', (data) => socket.join(data));
+
+        socket.on('disconnect', () => console.log('disconnected'));
+
+        socket.on('send-message', async (data) => {
+            try {
+                await addMessage(data);
+            } catch (error) {
+                return socket.emit('unsuccessfull', ERROR_MESSAGE.GENERAL_ERROR);
+            }
+            socket.to(data.id).emit('room-message', data);
+        });
+    });
+}
+
+
+const addMessage = async (data) => {
     try {
-        const { id, message } = req.body;
+        const { id, message } = data;
 
         await messageService.addMessage(id, message);
-
-        res.json(SUCCESS_MESSAGE.GENERAL_SUCCESS);
     } catch (error) {
-        console.log(error);
+        throw error;
     }
 }
 
-module.exports = {
-    addMessage
-}
+module.exports = socketIOConnection
