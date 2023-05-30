@@ -8,6 +8,10 @@ const errorMessages = {
     GENERAL_ERROR: {
         statusCode: STATUS_CODE.BAD_REQUEST,
         message: 'Something went wrong'
+    },
+    NOT_FOUND_ERROR: {
+        statisCode: STATUS_CODE.NOT_FOUND,
+        message: "Not found"
     }
 }
 

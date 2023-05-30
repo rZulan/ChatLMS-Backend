@@ -16,6 +16,7 @@ const server = http.createServer(app);
 
 // Routes
 app.use('/api', require('./routes/group'));
+app.use('/api', require('./routes/task'));
 
 socketIOConnection(server);
 
