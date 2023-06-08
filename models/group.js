@@ -5,6 +5,10 @@ const groupSchema = mongoose.Schema({
         type: String,
         required: true,
     },
+    classCode: {
+        type: String,
+        required: true
+    },
     instructor: {
         type: String,
         required: true,

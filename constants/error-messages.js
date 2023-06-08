@@ -10,8 +10,12 @@ const errorMessages = {
         message: 'Something went wrong'
     },
     NOT_FOUND_ERROR: {
-        statisCode: STATUS_CODE.NOT_FOUND,
+        statusCode: STATUS_CODE.NOT_FOUND,
         message: "Not found"
+    },
+    UNAUTHORIZED_ERROR: {
+        statusCode: STATUS_CODE.UNAUTHORIZED,
+        message: "Unauthorized"
     }
 }
 

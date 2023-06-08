@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { getGroups, createGroup, deleteGroup, getGroup, updateGroup, addMember, leaveMember, leaveGroup, } = require('../controller/group');
+const verifyJWT = require("../middleware/jwtVerify");
 
 router.get('/group', getGroups);
 router.post('/group', createGroup);
