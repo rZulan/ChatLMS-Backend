@@ -5,11 +5,11 @@ const bcrypt = require("bcrypt");
 
 const login = async (userCredentials) => {
     try {
-        const { username, password } = userCredentials;
+        const { email, password } = userCredentials;
 
-        if (!username || !password) throw ERROR_MESSAGE.GENERAL_ERROR;
+        if (!email || !password) throw ERROR_MESSAGE.GENERAL_ERROR;
 
-        const user = await USER.findOne({ username: username }).lean().exec();
+        const user = await USER.findOne({ email: email }).lean().exec();
 
         if (!user) throw ERROR_MESSAGE.UNAUTHORIZED_ERROR;
 

@@ -19,11 +19,11 @@ const registerUser = async (userCredentials) => {
             username,
             password,
             email,
-            role
+            role,
+            studentNumber
         } = userCredentials;
 
-        const duplicate = await USER.findOne({ username: username }).lean().exec();
-        if (duplicate) throw ERROR_MESSAGE.CONFLICT_ERROR;
+
 
         const duplicateEmail = await USER.findOne({ email: email }).lean().exec();
         if (duplicateEmail) throw ERROR_MESSAGE.CONFLICT_ERROR;
