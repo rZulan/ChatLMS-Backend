@@ -20,7 +20,7 @@ const userRegister = async (req, res) => {
         // const { error, value } = validateSignup(userCredentials);
 
         // if (error) throw { ...ERROR_MESSAGE.GENERAL_ERROR, error: error.message };
-
+        console.log(userCredentials)
         const registeredUser = await authService.registerUser(userCredentials);
         console.log(registeredUser);
         if (!registeredUser) throw ERROR_MESSAGE.GENERAL_ERROR;

@@ -4,7 +4,6 @@ const ERROR_MESSAGE = require("../constants/error-messages");
 const jwt = require("jsonwebtoken");
 const USER = require("../models/user");
 
-
 const login = async (req, res) => {
     try {
         const { userCredentials } = req.body;
@@ -14,8 +13,9 @@ const login = async (req, res) => {
 
         const accessToken = jwt.sign({
             "UserInfo": {
-                username: user.username,
-                role: user.role
+                email: user.email,
+                role: user.role,
+                name: user.firstName + " " + user.lastName
             }
         },
             process.env.ACCESS_TOKEN_SECRET,
@@ -23,7 +23,7 @@ const login = async (req, res) => {
         );
 
         const refreshToken = jwt.sign(
-            { username: user.username },
+            { email: user.email },
             process.env.REFRESH_TOKEN_SECRET,
             { expiresIn: "7d" }
         )
@@ -56,15 +56,16 @@ const refresh = (req, res) => {
             async (err, decoded) => {
                 if (err) return res.status(403).json({ message: 'Forbidden' })
 
-                const foundUser = await USER.findOne({ username: decoded.username }).exec()
+                const foundUser = await USER.findOne({ email: decoded.email }).exec()
 
                 if (!foundUser) return res.status(401).json({ message: 'Unauthorized' })
 
                 const accessToken = jwt.sign(
                     {
                         "UserInfo": {
-                            "username": foundUser.username,
-                            "role": foundUser.role
+                            "email": foundUser.email,
+                            "role": foundUser.role,
+                            "name": foundUser.firstName + " " + foundUser.lastName
                         }
                     },
                     process.env.ACCESS_TOKEN_SECRET,

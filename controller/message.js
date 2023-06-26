@@ -12,9 +12,11 @@ const socketIOConnection = async (server) => {
     });
 
     io.on('connection', (socket) => {
+
         socket.on('join-room', (data) => socket.join(data));
 
-        socket.on('disconnect', () => console.log('disconnected'));
+        socket.on('connected', () => console.log("connected"));
+        // socket.on('disconnect', () => console.log('disconnected'));
 
         socket.on('send-message', async (data) => {
             try {

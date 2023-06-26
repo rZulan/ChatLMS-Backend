@@ -3,7 +3,7 @@ const router = express.Router();
 const { getGroups, createGroup, deleteGroup, getGroup, updateGroup, addMember, leaveMember, leaveGroup, } = require('../controller/group');
 const verifyJWT = require("../middleware/jwtVerify");
 
-router.get('/group', getGroups);
+router.get('/group', verifyJWT, getGroups);
 router.post('/group', createGroup);
 router.delete('/group/:id', deleteGroup);
 router.get('/group/:id', getGroup);
